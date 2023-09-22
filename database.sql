@@ -1,8 +1,8 @@
 CREATE DATABASE  IF NOT EXISTS `faviel_shop` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `martfury_shop`;
+USE `faviel_shop`;
 -- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
--- Host: localhost    Database: martfury_shop
+-- Host: localhost    Database: faviel_shop
 -- ------------------------------------------------------
 -- Server version	8.0.25
 
