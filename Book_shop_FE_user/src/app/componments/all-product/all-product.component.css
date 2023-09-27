@@ -1,0 +1,39 @@
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 5rem;
+  color: #d3d3d3;
+}
+.full {
+  color: #ffcc23;
+}
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #ffcc23;
+}
+
+.my-page /deep/ .ngx-pagination{
+    margin: auto !important;
+}
+
+.my-page /deep/ .ngx-pagination .current {
+    padding: 0px;
+}
+
+.my-page /deep/ .ngx-pagination .current span {
+    padding: 7px 16px !important;
+    background-color: #326e51 !important;
+    border-radius: 10%;
+}
+
+.my-page /deep/ .ngx-pagination li {
+    margin: 4px;
+}
+
+.my-page /deep/ .ngx-pagination li a {
+    padding: 7px 16px !important;
+    background-color: rgba(212, 212, 212, 0.233);
+    border-radius: 10%;
+}

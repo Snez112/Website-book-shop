@@ -1,0 +1,119 @@
+<div class="ps-page--simple">
+    <div class="ps-breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a [routerLink]="['/home']">Trang chủ</a></li>
+                <li><a [routerLink]="['/all-product']">Cửa hàng</a></li>
+                <li>Giỏ hàng</li>
+            </ul>
+        </div>
+    </div>
+    <div class="ps-section--shopping ps-shopping-cart">
+        <div class="container">
+            <div class="ps-section__header">
+                <h1>Giỏ Hàng</h1>
+            </div>
+            <div class="ps-section__content">
+                <div class="table-responsive" *ngIf="cartDetails.length>0">
+                    <table class="table ps-table--shopping-cart ps-table--responsive">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng tiền</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of cartDetails, index as i">
+                                <td>{{i+1}}</td>
+                                <td data-label="Product">
+                                    <div class="ps-product--cart">
+                                        <div class="ps-product__thumbnail">
+                                            <a [routerLink]="['/product-detail/'+item.product.productId]">
+                                            <img [src]="item.product.image" alt="" /></a>
+                                        </div>
+                                        <div class="ps-product__content">
+                                            <a [routerLink]="['/product-detail/'+item.product.productId]">{{item.product.name}}</a>
+                                            <p>Thể loại:<strong> {{item.product.category.categoryName}}</strong></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="text-align: center;" class="price" data-label="Price">
+                                    {{item.product.price*(1 - item.product.discount/100) | currency:'VND'}}
+                                </td>
+                                <td data-label="Quantity" style="text-align: center;">
+                                    <input style="text-align: center;"
+                                    type="number" min="1"
+                                    [value]="item.quantity"
+                                    placeholder="0" name="quantity"
+                                    [(ngModel)]="item.quantity"
+                                    (change)="update(item.cartDetailId, item.quantity)" />
+                                </td>
+                                <td style="text-align: center;" data-label="Total">
+                                    {{item.price | currency:'VND'}}
+                                </td>
+                                <td style="text-align: center;" data-label="Actions">
+                                    <a href="javascript:void(0);" (click)="delete(item.cartDetailId)"><i class="icon-cross"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row mt-5 mb-5" *ngIf="cartDetails.length==0">
+                    <div class="col-8 offset-2 text-center">
+                        <h2 style="color: #326e51;">Giỏ hàng trống</h2>
+                        <h2 style="color: #326e51;;">Hãy chọn 1 vài sản phẩm vào giỏ hàng của bạn.</h2>
+                    </div>
+                </div>
+                <div class="ps-section__cart-actions">
+                    <a class="ps-btn" [routerLink]="['/all-product']">
+                    <i class="icon-arrow-left"></i> Quay lại cửa hàng</a>
+                </div>
+            </div>
+
+            <div class="ps-section__footer" *ngIf="cartDetails.length>0">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12 ">
+                        <div class="ps-block--shopping-total">
+                            <div class="ps-block__header">
+                                <h4 class="title">Thanh toán giỏ hàng</h4>
+                            </div>
+                            <div class="ps-block__header">
+                                <p>Tổng tiền <span> {{amountReal | currency:'VND'}}</span></p>
+                                <p>Tiết kiệm <span> {{discount | currency:'VND'}}</span></p>
+                            </div>
+                            <div class="ps-block__content">
+                                <h3>Tổng tiền phải thanh toán <span> {{amount | currency:'VND'}}</span></h3>
+                            </div>
+                        </div><a class="ps-btn ps-btn--fullwidth" [routerLink]="['/checkout']">Thanh toán</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ps-newsletter">
+    <div class="container">
+        <form class="ps-form--newsletter">
+            <div class="row">
+                <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <div class="ps-form__left">
+                        <h3>Bản tin</h3>
+                        <p>Đăng ký để nhận thông tin về sản phẩm và phiếu giảm giá</p>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <div class="ps-form__right">
+                        <div class="form-group--nest">
+                            <input class="form-control" type="email" placeholder="Địa chỉ Email">
+                            <button class="ps-btn">Gửi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
