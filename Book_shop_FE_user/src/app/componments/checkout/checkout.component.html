@@ -1,0 +1,139 @@
+<div class="ps-page--simple">
+    <div class="ps-breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a [routerLink]="['/home']">Trang chủ</a></li>
+                <li><a  [routerLink]="['/all-product']">Cửa hàng</a></li>
+                <li>Thanh Toán</li>
+            </ul>
+        </div>
+    </div>
+    <div class="ps-checkout ps-section--shopping">
+        <div class="container">
+            <div class="ps-section__header">
+                <h1>Thanh Toán</h1>
+            </div>
+            <div class="ps-section__content">
+                <form class="ps-form--checkout" [formGroup]="postForm">
+                    <div class="row">
+                        <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12  ">
+                            <div class="ps-form__billing-info">
+                                <h3 class="ps-form__heading">Thông tin nhận hàng</h3>
+                                <div class="form-group">
+                                    <label>Họ và tên<sup>*</sup>
+                                    </label>
+                                    <div class="form-group__content">
+                                        <input class="form-control" type="text" [value]="cart.user.name" readonly placeholder="Họ và tên">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Số điện thoại<sup>*</sup>
+                                    </label>
+                                    <div class="form-group__content">
+                                        <input
+                                        class="form-control"
+                                        type="text"
+                                        [ngClass]="{'is-invalid':postForm.get('phone')?.touched && postForm.get('phone')?.invalid}"
+                                        placeholder="Số điện thoại"
+                                        formControlName="phone">
+                                        <small class="invalid-feedback">Số điện thoại không hợp lệ</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Chọn tỉnh thành<sup>*</sup>
+                                    </label>
+                                    <div class="form-group__content">
+                                        <select style="font-size: 14px;" class="product-short-select custom-select" id="province" (change)="setProvinceCode($event.target)" formControlName="province"
+                                        [ngClass]="{'is-invalid':postForm.get('province')?.touched && postForm.get('province')?.invalid}">
+                                            <option value="0" selected disabled>Chọn tỉnh thành</option>
+                                            <option *ngFor="let item of provinces" [value]="item.code">{{item.name}}</option>
+                                        </select>
+                                        <small class="invalid-feedback">Hãy chọn tỉnh thành của bạn</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Chọn huyện/thành phố <sup>*</sup>
+                                    </label>
+                                    <div class="form-group__content">
+                                        <select style="font-size: 14px;" class="product-short-select custom-select" id="district" (change)="setDistrictCode($event.target)" formControlName="district"
+                                        [ngClass]="{'is-invalid':postForm.get('district')?.touched && postForm.get('district')?.invalid}">
+                                        <option value="0" selected disabled>Chọn huyện/thành phố</option>
+                                        <option *ngFor="let item of districts" [value]="item.code">{{item.name}}</option>
+                                        </select>
+                                        <small class="invalid-feedback">Hãy chọn huyện/thành phố của bạn</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Chọn phường/xã<sup>*</sup>
+                                    </label>
+                                    <div class="form-group__content">
+                                        <select style="font-size: 14px;" class="product-short-select custom-select" id="ward" (change)="setWardCode($event.target)" formControlName="ward"
+                                            [ngClass]="{'is-invalid':postForm.get('ward')?.touched && postForm.get('ward')?.invalid}">
+                                            <option value="0" selected disabled>Chọn phường/xã</option>
+                                            <option *ngFor="let item of wards" [value]="item.code">{{item.name}}</option>
+                                        </select>
+                                        <small class="invalid-feedback">Hãy chọn phường/xã của bạn</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Số nhà<sup>*</sup>
+                                    </label>
+                                    <div class="form-group__content">
+                                        <input
+                                        class="form-control"
+                                        type="text"
+                                        formControlName="number"
+                                        [ngClass]="{'is-invalid':postForm.get('number')?.touched && postForm.get('number')?.invalid}" placeholder="Số nhà">
+                                        <small class="invalid-feedback">Hãy nhập số nhà của bạn</small>
+                                    </div>
+                                </div>
+                                <h3 class="mt-40"> Thông tin bổ sung</h3>
+                                <div class="form-group">
+                                    <label>Ghi chú đơn hàng</label>
+                                    <div class="form-group__content">
+                                        <textarea class="form-control" rows="7" placeholder="Ghi chú về đơn hàng của bạn"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-4 col-md-12 col-sm-12  ">
+                            <div class="ps-form__total">
+                                <h3 class="ps-form__heading">Thông tin đơn hàng</h3>
+                                <div class="content">
+                                    <div class="ps-block--checkout-total">
+                                        <div class="ps-block__header">
+                                            <p>Sản phẩm</p>
+                                            <p>Tổng tiền</p>
+                                        </div>
+                                        <div class="ps-block__content">
+                                            <table class="table ps-block__products">
+                                                <tbody>
+                                                    <tr *ngFor="let item of cartDetails, index as i">
+                                                        <td>
+                                                            <a href="javascript:void(0);"> {{item.product.name}} × {{item.quantity}}</a>
+                                                            <p>Thể loại:<strong> {{item.product.category.categoryName}}</strong></p>
+                                                        </td>
+                                                        <td>{{item.price | currency:'VND'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <h4 class="ps-block__title">Tổng tiền: <span> {{amountReal | currency:'VND'}}</span></h4>
+                                            <h4 class="ps-block__title">Tiết kiệm: <span> {{discount | currency:'VND'}}</span></h4>
+                                            <h3>Tổng tiền phải thanh toán: <span style="color: red;padding-left: 40px;"> {{amount | currency:'VND'}}</span></h3>
+                                        </div>
+                                    </div>
+                                    <p style="text-align: center;">Thanh tóa khi nhận hàng</p>
+                                    <a class="ps-btn ps-btn--fullwidth" href="javascript:void(0);" (click)="checkOut()">Xác nhận thanh toán</a>
+                                    <br>
+                                    <p style="text-align: center;">OR</p>
+                                    <p style="text-align: center;">Thanh toán online qua paypal</p>
+                                    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
