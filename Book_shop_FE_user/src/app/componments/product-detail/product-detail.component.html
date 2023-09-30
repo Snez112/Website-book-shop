@@ -1,0 +1,236 @@
+<div class="ps-breadcrumb">
+    <div class="ps-container">
+        <ul class="breadcrumb">
+            <li><a [routerLink]="['/home']">Trang chủ</a></li>
+            <li><a [routerLink]="['/all-product']">Cửa hàng</a></li>
+            <li>Chi tiết sản phẩm</li>
+        </ul>
+    </div>
+</div>
+<div class="row" style="min-height: 700px !important;" *ngIf="isLoading">
+    <div class="spinner-border text-success" role="status" style="margin: auto; width: 6em;height: 6em;"></div>
+</div>
+<div class="ps-page--product" *ngIf="!isLoading">
+    <div class="ps-container">
+        <div class="ps-page__container">
+            <div class="ps-page__left">
+                <div class="ps-product--detail ps-product--fullwidth">
+                    <div class="ps-product__header">
+                        <div class="ps-product__thumbnail">
+                            <figure>
+                                <div class="ps-wrapper">
+                                    <div class="ps-product__gallery">
+                                        <div class="item">
+                                            <a href="#">
+                                                <img [src]="product.image" alt="">
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </figure>
+                        </div>
+                        <div class="ps-product__info">
+                            <h1>{{product.name}}</h1>
+                            <div class="ps-product__desc" *ngIf="getAvgRate(product.productId)>0">
+                                <ngb-rating [rate]="getAvgRate(product.productId)" [starTemplate]="t" [readonly]="true" [max]="5"
+                                        title="{{getAvgRate(product.productId)}} sao">
+                                </ngb-rating>
+                                ({{countRate}} đánh giá)
+                            </div>
+                            <p class="ps-product__price sale">
+                                <del *ngIf="product.discount != 0">{{product.price|currency:'VND'}}</del>
+                                {{product.price*(1 - product.discount/100) | currency:'VND'}}
+                            </p>
+                            <div class="ps-product__desc">
+                                <p>Thể loại:<a href="javascript:void(0);"><strong> {{product.category.categoryName}}</strong></a></p>
+                                <p style="text-decoration: underline;font-size: 16px;">Mô tả sản phẩm <strong> (Đã bán {{product.sold}} sản phẩm):</strong></p>
+                                <p>{{product.description}}</p>
+                            </div>
+                            <div class="ps-product__shopping">
+                                <a class="ps-btn ps-btn--black" href="javascript:void(0);" (click)="addCart(product.productId, product.price*(1 - product.discount/100))">Thêm Giỏ Hàng</a>
+                                <div class="ps-product__actions">
+                                    <a href="javascript:void(0);" (click)="toggleLike(product.productId)"><i style="color: #ffcc23;" class="icon-heart"></i></a> {{totalLike}} lượt thích
+                                </div>
+                            </div>
+                            <div class="ps-product__specification">
+                                <p class="categories"><strong> Categories:</strong><a href="#">Consumer Electronics</a>,<a href="#"> Refrigerator</a>,<a href="#">Babies & Moms</a></p>
+                                <p class="tags"><strong> Tags</strong><a href="#">sofa</a>,<a href="#">technologies</a>,<a href="#">wireless</a></p>
+                            </div>
+                            <div class="ps-product__sharing"><a class="facebook" href="#"><i class="fa fa-facebook"></i></a><a class="twitter" href="#"><i class="fa fa-twitter"></i></a><a class="google" href="#"><i class="fa fa-google-plus"></i></a><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></div>
+                        </div>
+                    </div>
+
+                    <div >
+                      <ul class="ps-tab-list">
+                          <li class="active"><a href="javascript:void(0);">Mô tả sản phẩm</a></li>
+                      </ul>
+                      <div class="ps-tab active" id="tab-1">
+                            <p>{{product.description}}</p>
+                      </div>
+                  </div>
+                    <div >
+                        <ul class="ps-tab-list">
+                            <li class="active"><a href="javascript:void(0);">Đánh giá sản phẩm</a></li>
+                        </ul>
+                        <div class="ps-tab active" id="tab-1">
+                            <div class="table-responsive">
+                                <p *ngIf="rates.length==0" style="text-decoration: underline;">Sản phẩm này chưa có đánh giá nào.</p>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <table class="table table-bordered ps-table ps-table--specification">
+                                            <tbody>
+                                                <tr *ngFor="let item of rates | paginate: { itemsPerPage: itemsComment, currentPage: 1}">
+                                                    <td>
+                                                        <a [href]="item.user.image">
+                                                        <img [src]="item.user.image" alt="" /></a>
+                                                    </td>
+                                                    <td>
+                                                        <h5>
+                                                            Họ và Tên: <a>{{item.user.name}}</a><br>
+                                                        </h5>
+                                                        <h5>
+                                                            Ngày: <span>{{item.rateDate|date:'dd-MM-yyyy'}}</span>
+                                                        </h5>
+                                                        <h5>
+                                                            Đánh giá:
+                                                            <ngb-rating class="ml-2" [(rate)]="item.rating"
+                                                                title="{{item.rating}} sao" [starTemplate]="t" [readonly]="true" [max]="5">
+                                                            </ngb-rating>
+                                                        </h5>
+                                                        <h5>
+                                                            Nội dung :
+                                                            <p style="color: #09c; font-size: 16px;">
+                                                                {{item.comment}}
+                                                            </p>
+                                                        </h5>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-2" *ngIf="rates.length!=0">
+                                        <div class="padding-right">
+                                            <h5>Hiển thị: </h5>
+                                            <select class="product-short-select custom-select ml-auto"
+                                                style="font-size: 14px;"
+                                                [(ngModel)]="itemsComment"
+                                                (change)="setItemsComment(itemsComment)">
+                                                <option selected value="3">3</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="100">10</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ps-page__right">
+                <aside class="widget widget_product widget_features">
+                    <p><i class="icon-network"></i> Vận chuyển toàn quốc</p>
+                    <p><i class="icon-3d-rotate"></i> Hoàn trả miễn phí trong 7 ngày nếu đủ điều kiện</p>
+                    <p><i class="icon-receipt"></i> Nhà cung cấp đưa ra hóa đơn cho sản phẩm này</p>
+                    <p><i class="icon-credit-card"></i> Thanh toán trực tuyến hoặc khi nhận hàng</p>
+                </aside>
+                <aside class="widget widget_sell-on-site">
+                    <p><i class="icon-store"></i> Bán trên Martfury?<a href="#"> Đăng ký ngay !</a></p>
+                </aside>
+                <aside class="widget widget_ads"><a href="#"><img src="img/ads/2.png" alt=""></a></aside>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!isLoading">
+            <div class="ps-section--default">
+                <div class="ps-section__header" >
+                    <h3>Sản phẩm liên quan</h3>
+                </div>
+                <div class="ps-section__content">
+                    <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+                        <div ngxSlickItem *ngFor="let item of products | paginate: { itemsPerPage: 8, currentPage: 0}" class="slide" >
+                            <div class="ps-product">
+                                <div class="ps-product__thumbnail">
+                                    <a href="javascript:void(0);">
+                                        <img [src]="item.image" [routerLink]="['/product-detail/'+item.productId]" alt="" />
+                                    </a>
+                                    <div class="ps-product__badge">-{{item.discount}}%</div>
+                                    <ul class="ps-product__actions">
+                                        <li><a href="javascript:void(0);" (click)="addCart(item.productId, item.price*(1 - item.discount/100))" data-toggle="tooltip" data-placement="top" title="Thêm Giỏ Hàng"><i class="icon-bag2"></i></a></li>
+                                        <li><a [routerLink]="['/product-detail/'+item.productId]" data-toggle="tooltip" data-placement="top" title="Xem Chi Tiết"><i class="icon-eye"></i></a></li>
+                                        <li><a href="javascript:void(0);" (click)="toggleLike(item.productId)" data-toggle="tooltip" data-placement="top" title="Yêu Thích"><i class="icon-heart"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ps-product__container">
+                                    <a class="ps-product__vendor" href="javascript:void(0);">
+                                        <span> {{item.category.categoryName}}</span>
+                                    </a>
+                                    <div class="ps-product__content">
+                                        <a class="ps-product__title" [routerLink]="['/product-detail/'+item.productId]">{{item.name}}</a>
+                                        <div class="ps-product__desc" *ngIf="getAvgRate(item.productId)>0">
+                                            <ngb-rating [rate]="getAvgRate(item.productId)" [starTemplate]="t" [readonly]="true" [max]="5"
+                                                    title="{{getAvgRate(item.productId)}} sao">
+                                            </ngb-rating>
+                                            ({{countRate}} đánh giá)
+                                        </div>
+                                        <p class="ps-product__price sale">
+                                            <del *ngIf="item.discount != 0">{{item.price|currency:'VND'}}</del>
+                                            {{item.price*(1 - item.discount/100) | currency:'VND'}}
+                                        </p>
+                                    </div>
+                                    <div class="ps-product__content hover">
+                                        <a class="ps-product__title" [routerLink]="['/product-detail/'+item.productId]">{{item.name}}</a>
+                                        <div class="ps-product__desc" *ngIf="getAvgRate(item.productId)>0">
+                                            <ngb-rating [rate]="getAvgRate(item.productId)" [starTemplate]="t" [readonly]="true" [max]="5"
+                                                    title="{{getAvgRate(item.productId)}} sao">
+                                            </ngb-rating>
+                                            ({{countRate}} đánh giá)
+                                        </div>
+                                        <p class="ps-product__price sale">
+                                            <del *ngIf="item.discount != 0">{{item.price|currency:'VND'}}</del>
+                                            {{item.price*(1 - item.discount/100) | currency:'VND'}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ngx-slick-carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ps-newsletter">
+    <div class="container">
+        <form class="ps-form--newsletter">
+            <div class="row">
+                <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <div class="ps-form__left">
+                        <h3>Bản tin</h3>
+                        <p>Đăng ký để nhận thông tin về sản phẩm và phiếu giảm giá</p>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <div class="ps-form__right">
+                        <div class="form-group--nest">
+                            <input class="form-control" type="email" placeholder="Địa chỉ Email">
+                            <button class="ps-btn">Gửi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- star -->
+<ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100" style="font-size: 90%;">
+        <span class="half" [style.width.%]="fill">
+            <i class="fa fa-star"></i>
+        </span>
+        <i class="fa fa-star"></i>
+    </span>
+</ng-template>

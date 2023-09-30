@@ -1,0 +1,167 @@
+<div class="ps-page--my-account">
+    <div class="ps-breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a [routerLink]="['/home']">Trang chủ</a></li>
+                <li>Đăng nhập &amp; Đăng ký</li>
+            </ul>
+        </div>
+    </div>
+    <div class="ps-my-account">
+        <div class="container">
+            <form class="ps-form--account">
+                <ul class="nav nav-tabs">
+                    <li>
+                        <a href="#sign-in" class="nav-link active" data-toggle="tab" style="color: black;">Đăng nhập</a>
+                    </li>
+                    <li>
+                        <a href="#sign-up" class="nav-link" data-toggle="tab" style="color: black;">Đăng ký</a>
+                    </li>
+                </ul>
+                <div class="ps-tabs">
+                    <div class="ps-tab active" id="sign-in">
+                        <div class="ps-form__content">
+                            <h5>Đăng nhập tài khoản của bạn</h5>
+                            <form class="form" [formGroup]="loginForm">
+                                <div class="form-group">
+                                    <input
+                                    formControlName="email"
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Email">
+                                </div>
+                                <div class="form-group form-forgot">
+                                    <input class="form-control"
+                                        type="password"
+                                        [type]="show ? 'text' : 'password'"
+                                        formControlName="password"
+                                        id="password"
+                                        placeholder="Mật khẩu">
+                                    <a><app-forgot-password></app-forgot-password></a>
+                                </div>
+                                <div class="form-group">
+                                    <div class="ps-checkbox">
+                                        <input class="form-control" type="checkbox" (click)="toggle()" id="remember-me" name="remember-me" />
+                                        <label for="remember-me">Hiện thị mật khẩu?</label>
+                                    </div>
+                                </div>
+                                <div class="form-group submtit">
+                                    <button (click)="sign_in()" type="submit" class="ps-btn ps-btn--fullwidth">Đăng nhập</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="ps-form__footer">
+                            <p>Connect with:</p>
+                            <ul class="ps-list--social">
+                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a class="google" href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="ps-tab" id="sign-up">
+                        <div class="ps-form__content">
+                            <h5>Đăng ký tài khoản</h5>
+                            
+                            <form class="form" [formGroup]="registerForm">
+                                <div class="form-group">
+                                    <input
+                                    [ngClass]="{'is-invalid':registerForm.get('email')?.touched && registerForm.get('email')?.invalid}"
+                                    formControlName="email"
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Nhập địa chỉ email">
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                    [ngClass]="{'is-invalid':registerForm.get('otp')?.touched && registerForm.get('otp')?.invalid}"
+                                    formControlName="otp"
+                                    maxlength="6"
+                                    name="otp" id="otp" 
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Mã xác thực OTP">
+                                    <a style="font-size: 14px;"
+                                        class="btn btn-warning"
+                                        (click)="registerForm.get('email')?.valid?sendOtp():sendError()">
+                                        <span>Lấy mã xác thực OTP</span>
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                    [ngClass]="{'is-invalid':registerForm.get('name')?.touched && registerForm.get('name')?.invalid}"
+                                    formControlName="name"
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Họ và tên">
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                    [ngClass]="{'is-invalid':registerForm.get('password')?.touched && registerForm.get('password')?.invalid}"
+                                    id="pass" [type]="show ? 'text' : 'password'"
+                                    formControlName="password"
+                                    class="form-control"
+                                    type="password"
+                                    placeholder="Mật khẩu">
+                                    <button class="btn btn-warning" style="font-size: 14px;" type="button" (click)="toggle()"><span>Hiển thị mật khẩu?</span></button>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                    [ngClass]="{'is-invalid':registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid}"
+                                    formControlName="phone"
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Số điện thoại">
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                    [ngClass]="{'is-invalid':registerForm.get('address')?.touched && registerForm.get('address')?.invalid}"
+                                    formControlName="address"
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Địa chỉ">
+                                </div>
+                                <div class="form-group submtit">
+                                    <button type="submit" (click)="sign_up()" class="ps-btn ps-btn--fullwidth">Đăng ký miễn phí</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="ps-form__footer">
+                            <p>Connect with:</p>
+                            <ul class="ps-list--social">
+                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a class="google" href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="ps-newsletter">
+    <div class="container">
+        <form class="ps-form--newsletter">
+            <div class="row">
+                <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <div class="ps-form__left">
+                        <h3>Bản tin</h3>
+                        <p>Đăng ký để nhận thông tin về sản phẩm và phiếu giảm giá</p>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <div class="ps-form__right">
+                        <div class="form-group--nest">
+                            <input class="form-control" type="email" placeholder="Địa chỉ Email">
+                            <button class="ps-btn">Gửi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

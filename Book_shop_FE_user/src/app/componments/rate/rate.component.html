@@ -1,0 +1,36 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title p-0">Đánh giá sản phẩm</h4>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="postForm">
+            <input type="hidden" formControlName="id">
+            <input type="hidden" formControlName="product">
+            <input type="hidden" formControlName="rating">
+            <div class="col-10 offset-1 d-block">
+                <img [src]="orderDetail.product.image" style="width: 130px;">
+                <span style="font-weight: bold;" class="ml-2">{{orderDetail.product.name}}</span>
+            </div>
+            <div class="col-10 offset-1 mt-3">
+                <label for="comment">Bình luận:</label>
+                <textarea class="form-control texta" formControlName="comment" name="comment" id="comment" row="3"></textarea>
+            </div>
+            <div class="col-10 offset-1 d-flex mt-3">
+                <span>Đánh giá:</span>
+                <ngb-rating class="ml-2" [(rate)]="star" [(ngModel)]="star" [starTemplate]="t" [readonly]="false" [max]="5"></ngb-rating>
+            </div>
+            <button class="mt-3 btn btn-info" style="margin-left: 8%;font-size: 14px;" (click)="rating()">Gửi đánh giá</button>
+        </form>
+    </div>
+</ng-template>
+<a class="fa fa-star" (click)="open(content)"></a>
+
+<!-- star -->
+<ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100" style="font-size: 90%;">
+        <span class="half" [style.width.%]="fill">
+            <i class="fa fa-star"></i>
+        </span>
+    <i class="fa fa-star"></i>
+    </span>
+</ng-template>

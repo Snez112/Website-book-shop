@@ -1,0 +1,46 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Chi tiết đơn hàng</h4>
+        <h4 class="float-right">Tổng tiền: {{order.amount|currency:'VND'}}</h4>
+    </div>
+    <div class="modal-body">
+        <table class="table">
+            <thead>
+                <tr style="background-color: #326e51; color: white;">
+                    <th class="text-center">STT</th>
+                    <th>Sản phẩm</th>
+                    <th>Giá</th>
+                    <th class="text-center">Số lượng</th>
+                    <th class="text-center" *ngIf="order.status==2">Đánh giá</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of orderDetails, index as i">
+                    <td class="text-center">{{i+1}}</td>
+                    <td><img [src]="item.product.image" alt="Hình ảnh sản phẩm" width="60px" style="cursor: pointer;"
+                            [routerLink]="['/product-detail/'+item.product.productId]"> {{item.product.name}}</td>
+                    <td>{{item.price | currency:'VND'}}</td>
+                    <td class="text-center">{{item.quantity}}</td>
+                    <td class="text-center" *ngIf="order.status==2">
+                        <app-rate
+                            style="cursor: pointer; color: #ffcc23;" title="Đánh giá"
+                            [orderDetail]="item" (editFinish)="finish()">
+                        </app-rate>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+<a (click)="open(content)" title="Chi tiết đơn hàng" style="cursor: pointer;width: 35px;
+                                                            height: 35px;
+                                                            font-size: 14px;
+                                                            line-height: 35px;
+                                                            text-align: center;
+                                                            border-radius: 5px;
+                                                            margin: 3px;
+                                                            color: var(--brandcolor);
+                                                            background: var(--whitecolor);
+                                                            text-shadow: var(--tshadow);"
+    onMouseOver="this.style.color='white', this.style.backgroundColor='#326e51'"
+    onMouseOut="this.style.color='#326e51', this.style.backgroundColor='white'"><i class="icon-eye"></i></a>

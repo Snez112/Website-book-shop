@@ -1,0 +1,110 @@
+<div class="ps-page--simple">
+    <div class="ps-breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a [routerLink]="['/home']">Trang chủ</a></li>
+                <li><a [routerLink]="['/all-product']">Cửa hàng</a></li>
+                <li>Danh sách yêu thích</li>
+            </ul>
+        </div>
+    </div>
+    <div class="ps-section--shopping ps-whishlist">
+        <div class="container">
+            <div class="ps-section__header">
+                <h1>Danh sách yêu thích</h1>
+            </div>
+            <div class="col-lg-12 text-center m-5" *ngIf="favorites.length < 1">
+                <h2 style="color: #326e51;">Không có sản phẩm nào trong danh sách yêu thích của bạn</h2>
+            </div>
+            <div class="ps-section__content">
+                <div class="table-responsive" *ngIf="favorites.length > 0">
+                    <table class="table ps-table--whishlist ps-table--responsive">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Sản phẩm</th>
+                                <th>Tên</th>
+                                <th>Giá</th>
+                                <th>Trạng thái</th>
+                                <th>Thêm giỏ hàng</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of favorites | paginate: { itemsPerPage: 5, currentPage: page}, index as i">
+                                <td>{{i+1}}</td>
+                                <td style="text-align: center;" data-label="Product">
+                                    <div class="ps-product--cart">
+                                        <div class="ps-product__thumbnail">
+                                            <a [routerLink]="['/product-detail/'+item.product.productId]">
+                                                <img [src]="item.product.image" alt="" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="text-align: center;" data-label="Product">
+                                    <div class="ps-product--cart">
+                                        <div class="ps-product__content">
+                                            <a [routerLink]="['/product-detail/'+item.product.productId]">{{item.product.name}}</a>
+                                            <p>Thể loại:<strong> {{item.product.category.categoryName}}</strong></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="text-align: center;" class="price" data-label="Price">
+                                    {{item.product.price*(1 - item.product.discount/100) | currency:'VND'}}
+                                </td>
+                                <td style="text-align: center;" data-label="Status">
+                                    <span class="ps-tag ps-tag--in-stock">{{item.product.quantity>0?'Còn hàng': 'Hết hàng'}}</span>
+                                </td>
+                                <td style="text-align: center;" data-label="action">
+                                    <button class="ps-btn" (click)="addCart(item.product.productId, item.product.price*(1 - item.product.discount/100))" [disabled]="item.product.quantity<0">Thêm Giỏ Hàng</button>
+                                </td>
+                                <td style="text-align: center;" data-label="Remove">
+                                    <a href="javascript:void(0);" (click)="delete(item.favoriteId, item.product.name)">
+                                        <i class="icon-cross"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row" style="padding-top: 50px">
+                        <div class="col-lg-12">
+                            <ul>
+                                <pagination-controls
+                                    (pageChange)="page = $event"
+                                    previousLabel=""
+                                    nextLabel=""
+                                    class="text-center my-page">
+                                </pagination-controls>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ps-newsletter">
+    <div class="container">
+        <form class="ps-form--newsletter">
+            <div class="row">
+                <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <div class="ps-form__left">
+                        <h3>Bản tin</h3>
+                        <p>Đăng ký để nhận thông tin về sản phẩm và phiếu giảm giá</p>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <div class="ps-form__right">
+                        <div class="form-group--nest">
+                            <input class="form-control" type="email" placeholder="Địa chỉ Email">
+                            <button class="ps-btn">Gửi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

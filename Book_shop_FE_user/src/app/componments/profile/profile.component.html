@@ -1,0 +1,121 @@
+<main class="ps-page--my-account">
+    <div class="ps-breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a [routerLink]="['/home']">Trang chủ</a></li>
+                <li><a [routerLink]="['/profile']">Tài khoản</a></li>
+                <li>Tài khoản cá nhân</li>
+            </ul>
+        </div>
+    </div>
+    <section class="ps-section--account">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="ps-section__left">
+                        <aside class="ps-widget--account-dashboard">
+                            <div class="ps-widget__header">
+                                <img [src]="customer.image" alt="" />
+                                <figure>
+                                    <p>Tên: <span style="color: #09c;">{{customer.name}}</span></p>
+                                    <p>Tham gia: <span>{{customer.registerDate | date:'dd-MM-yyy'}}</span></p>
+                                </figure>
+                            </div>
+                            <div class="ps-widget__content">
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0);"><i class="icon-user"></i> {{customer.email}}</a>
+                                        <a href="javascript:void(0);"><i class="icon-papers"></i> {{customer.phone}}</a>
+                                        <a href="javascript:void(0);"><i class="icon-user"></i> {{customer.gender?'Nam':'Nữ'}}</a>
+                                        <a href="javascript:void(0);"><i class="icon-map-marker"></i> {{customer.address}}</a>
+                                        <a href="javascript:void(0);"><i class="icon-store"></i>Đã giao dịch: {{done}} đơn</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="ps-section__right">
+                        <div class="ps-section--account-setting">
+                            <div class="ps-section__header">
+                                <h3>Lịch sử đặt hàng</h3>
+                            </div>
+                            <div class="ps-section__content">
+                                <div class="table-responsive">
+                                    <table class="table ps-table ps-table--invoices">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Ngày đặt</th>
+                                                <th>Tổng tiền</th>
+                                                <th>Địa chỉ</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Trạng thái</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of orders | paginate: { itemsPerPage: 5, currentPage: page}, index as i">
+                                                <td>{{i+1}}</td>
+                                                <td style="width: 15%;">{{item.orderDate|date:'dd-MM-yyyy'}}</td>
+                                                <td>{{item.amount|currency:'VND'}}</td>
+                                                <td>{{item.address}}</td>
+                                                <td>{{item.phone}}</td>
+                                                <td style="width: 17%;">{{item.status==0?'Chờ xác nhận':(item.status==1?'Đã xác nhận':(item.status==2)?'Đã thanh toán':'Đã huỷ')}}</td>
+                                                <td style="width: 5%;">
+                                                    <app-order-detail [id]="item.ordersId"></app-order-detail>
+                                                    <a [title]="item.status==0?'Huỷ đơn':'Không thể huỷ đơn này'"
+                                                        (click)="cancel(item.status==0?item.ordersId:-1)"
+                                                        [style]="item.status==0?'cursor: pointer':'cursor: not-allowed'"
+                                                        onMouseOver="this.style.color='white', this.style.backgroundColor='red'"
+                                                        onMouseOut="this.style.color='red', this.style.backgroundColor='white'">
+                                                        <i class="icon-cross"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <ul>
+                                                <pagination-controls
+                                                    (pageChange)="page = $event"
+                                                    previousLabel=""
+                                                    nextLabel=""
+                                                    class="text-center my-page">
+                                                </pagination-controls>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="ps-newsletter">
+        <div class="container">
+            <form class="ps-form--newsletter">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                        <div class="ps-form__left">
+                            <h3>Bản tin</h3>
+                            <p>Đăng ký để nhận thông tin về sản phẩm và phiếu giảm giá</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                        <div class="ps-form__right">
+                            <div class="form-group--nest">
+                                <input class="form-control" type="email" placeholder="Địa chỉ Email">
+                                <button class="ps-btn">Gửi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
