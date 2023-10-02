@@ -4,19 +4,20 @@
  * @author DongTHD
  * @date Mar 10, 2022
 */
-package vn.fs.dto.utils;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import vn.fs.dto.service.SendMailService;
-import vn.fs.entity.Order;
-import vn.fs.entity.OrderDetail;
-import vn.fs.repository.OrderDetailRepository;
-import vn.fs.repository.OrderRepository;
+package vn.fs.utils;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import vn.fs.entity.Order;
+import vn.fs.entity.OrderDetail;
+import vn.fs.repository.OrderDetailRepository;
+import vn.fs.repository.OrderRepository;
+import vn.fs.service.SendMailService;
 
 @Service
 public class SendMailUtil {
@@ -28,7 +29,7 @@ public class SendMailUtil {
 	OrderDetailRepository orderDetailRepository;
 
 	@Autowired
-    SendMailService sendMailService;
+	SendMailService sendMailService;
 
 	public void sendMailOrder(Order order) {
 		SimpleDateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
