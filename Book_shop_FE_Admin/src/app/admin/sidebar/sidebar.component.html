@@ -1,0 +1,91 @@
+<ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" [routerLink]="['/admin/dashboard']">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <!-- <i class="fas fa-user-shield"></i> -->
+        </div>
+        <div class="sidebar-brand-text mx-2">Martfury Shop</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item {{pageActive=='dashboard'?'active':''}}">
+        <a class="nav-link" [routerLink]="['/admin/dashboard']">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Trang chủ</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Quản lý
+    </div>
+
+    <li class="nav-item {{pageActive=='customer'?'active':''}}">
+        <a class="nav-link" [routerLink]="['/admin/customer']">
+            <i class="fas fa-user fa-chart-area"></i>
+            <span>Khách hàng</span></a>
+    </li>
+    <li class="nav-item {{pageActive=='order'?'active':''}}">
+        <a class="nav-link" [routerLink]="['/admin/order']">
+            <i class="fas fa-shopping-bag fa-chart-area"></i>
+            <span>Đơn hàng</span></a>
+    </li>
+    <li class="nav-item {{pageActive=='product'?'active':''}}">
+        <a class="nav-link" [routerLink]="['/admin/product']">
+            <i class="fas fa-table fa-chart-area"></i>
+            <span>Sản phẩm</span></a>
+    </li>
+    <li class="nav-item {{pageActive=='category'?'active':''}}">
+        <a class="nav-link" [routerLink]="['/admin/category']">
+            <i class="fas fa-table fa-chart-area"></i>
+            <span>Loại sản phẩm</span></a>
+    </li>
+
+    <li class="nav-item {{pageActive=='rate'?'active':''}}">
+        <a class="nav-link" [routerLink]="['/admin/rate']">
+            <i class="fas fa-star-half-alt"></i>
+            <span>Đánh giá của khách hàng</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Thống kê
+    </div>
+
+    <!-- Nav Item - Charts -->
+    <li class="nav-item {{pageActive=='category-best-seller'?'active':''}}">
+        <a class="nav-link" [routerLink]="['/admin/statistical-category']">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Danh mục bán chạy</span></a>
+    </li>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item {{pageActive=='soldest'?'active':''}}">
+        <a class="nav-link" [routerLink]="['/admin/soldest']">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Sản phẩm bán chạy</span></a>
+    </li>
+
+    <li class="nav-item {{pageActive=='inventory'?'active':''}}">
+        <a class="nav-link" [routerLink]="['/admin/inventory']">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Hàng tồn kho</span></a>
+    </li>
+
+    <!-- Divider -->
+    <!-- <hr class="sidebar-divider d-none d-md-block"> -->
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <!-- <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div> -->
+
+</ul>

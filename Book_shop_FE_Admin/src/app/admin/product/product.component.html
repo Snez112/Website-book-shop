@@ -1,0 +1,68 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-12">
+            <mat-form-field>
+                <mat-label>Tìm kiếm</mat-label>
+                <input matInput type="text" (keyup)="search($event)" />
+            </mat-form-field>            
+            <button mat-raised-button color="primary" class="ml-3" style="float: right;" (click)="exporter.exportTable('csv', {fileName:'Danh sách sản phẩm'})">Xuất Excel</button>
+            <app-add-product style="float: right;" (saveFinish)="finish()"></app-add-product>
+
+            <table mat-table matTableExporter #exporter="matTableExporter" [hiddenColumns]="[0,7,8]" [dataSource]="listData" matSort class="mat-elevation-z8">
+                <ng-container matColumnDef="image">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%;"></th>
+                    <td mat-cell *matCellDef="let row">
+                        <img [src]="row.image" width="60px" class="p-1">
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="productId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 12%">Mã sản phẩm</th>
+                    <td mat-cell *matCellDef="let row">{{row.productId}}</td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 20%;">Tên sản phẩm</th>
+                    <td mat-cell *matCellDef="let row">{{row.name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 12%;">Giá</th>
+                    <td mat-cell *matCellDef="let row">{{row.price|currency:'VND'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="discount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 10%;">Giảm giá</th>
+                    <td mat-cell *matCellDef="let row">{{row.discount}}%</td>
+                </ng-container>
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 14%;">Loại hàng</th>
+                    <td mat-cell *matCellDef="let row">{{row.category.categoryName}}</td>
+                </ng-container>
+                <ng-container matColumnDef="enteredDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 12%;">Ngày thêm</th>
+                    <td mat-cell *matCellDef="let row">{{row.enteredDate|date:'dd-MM-yyyy'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef style="width: 4%;">Xem</th>
+                    <td mat-cell *matCellDef="let row">
+                        <app-edit-product [id]="row.productId" (editFinish)="finish()"></app-edit-product>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef style="width: 4%;">Xoá</th>
+                    <td mat-cell *matCellDef="let row">
+                        <a (click)="delete(row.productId, row.name)" style="color: steelblue; cursor: pointer;"><i class="fa fa-trash"></i></a>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+            </table>
+            <mat-paginator [length]="productsLength" showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

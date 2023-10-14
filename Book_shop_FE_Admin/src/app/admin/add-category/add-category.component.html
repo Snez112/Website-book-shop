@@ -1,0 +1,19 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h2 class="modal-title m-0">Thêm loại sản phẩm</h2>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="postForm">
+            <input type="hidden" formControlName='categoryId'>
+            <input type="hidden" formControlName="status">
+            <div class="form-group mb-3">
+                <label for="categoryName" class="form-label">Tên nhãn hàng:</label>
+                <input type="text" class="form-control" id="categoryName" placeholder="Tên nhãn hàng" [ngClass]="{'is-invalid':postForm.get('categoryName')?.touched && postForm.get('categoryName')?.invalid}" formControlName='categoryName'>
+                <small class="invalid-feedback">Hãy nhập đúng tên nhãn hàng</small>
+            </div>
+            <button mat-raised-button color="primary" [disabled]="postForm?.invalid" (click)="save()">Thêm</button>
+        </form>
+    </div>
+</ng-template>
+<button mat-raised-button color="primary" (click)="open(content)">Thêm nhãn hàng</button>
+

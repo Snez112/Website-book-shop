@@ -1,0 +1,47 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Danh sách loại hàng</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-12">
+            <mat-form-field>
+                <mat-label>Tìm kiếm</mat-label>
+                <input matInput type="text" (keyup)="search($event);" />
+            </mat-form-field>            
+            <button mat-raised-button color="primary" class="ml-3" style="float: right;" (click)="exporter.exportTable('csv', {fileName:'Danh sách loại sản phẩm'})">Xuất Excel</button>
+            <app-add-category style="float: right;" (saveFinish)="finish()"></app-add-category>
+        </div>
+        <div class="col-12">
+            <table mat-table matTableExporter #exporter="matTableExporter" [hiddenColumns]="[2,3]" [dataSource]="listData" matSort class="mat-elevation-z8">
+                <ng-container matColumnDef="categoryId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;">Mã nhãn hiệu</th>
+                    <td mat-cell *matCellDef="let row">{{row.categoryId}}</td>
+                </ng-container>
+                <ng-container matColumnDef="categoryName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 60%;">Tên nhãn hiệu</th>
+                    <td mat-cell *matCellDef="let row">{{row.categoryName}}</td>
+                </ng-container>
+                <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%; text-align: center;">Xem</th>
+                    <td mat-cell *matCellDef="let row" style="text-align: center;">
+                        <app-edit-category [id]='row.categoryId' (editFinish)="finish()"></app-edit-category>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef style="width: 10%; text-align: center;">Xoá</th>
+                    <td mat-cell *matCellDef="let row" style="text-align: center;">
+                        <a (click)="delete(row.categoryId, row.categoryName)" style="color: steelblue; cursor: pointer;"><i class="fas fa-trash"></i></a>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+            </table>
+            <mat-paginator [length]="categoriesLength" [pageSize]="10" showFirstLastButtons [pageSizeOptions]="[10, 25, 50, 100]">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

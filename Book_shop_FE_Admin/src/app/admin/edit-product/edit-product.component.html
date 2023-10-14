@@ -1,0 +1,66 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h2 class="modal-title m-0">Sửa sản phẩm</h2>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="postForm" class="row">
+            <input type="hidden" formControlName='productId'>
+            <input type="hidden" formControlName="status">
+            <input type="hidden" formControlName="sold">
+            <div class="form-group col-6">
+                <label for="name">Tên sản phẩm</label>
+                <input type="text" id="name" [ngClass]="{'is-invalid':postForm.get('name')?.touched && postForm.get('name')?.invalid}" class="form-control" formControlName="name">
+                <small class="invalid-feedback">Tên sản phẩm không hợp lệ</small>
+            </div>
+            <div class="form-group col-6">
+                <label for="price">Giá</label>
+                <div class="input-group">
+                    <input type="number" id="price" [ngClass]="{'is-invalid':postForm.get('price')?.touched && postForm.get('price')?.invalid}" class="form-control" formControlName="price">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">VNĐ</span>
+                    </div>
+                    <small class="invalid-feedback">Giá sản phẩm không hợp lệ</small>
+                </div>
+            </div>
+            <div class="form-group col-6">
+                <label for="quantity">Số lượng</label>
+                <input type="number" id="quantity" [ngClass]="{'is-invalid':postForm.get('quantity')?.touched && postForm.get('quantity')?.invalid}" class="form-control" formControlName="quantity">
+                <small class="invalid-feedback">Số lượng không hợp lệ</small>
+            </div>
+            <div class="form-group col-6">
+                <label for="discount">Khuyến mãi</label>
+                <div class="input-group">
+                    <input type="number" id="discount" [ngClass]="{'is-invalid':postForm.get('discount')?.touched && postForm.get('discount')?.invalid}" class="form-control" formControlName="discount">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">%</span>
+                    </div>
+                    <small class="invalid-feedback">Khuyến mãi không hợp lệ</small>
+                </div>
+            </div>
+            <div class="col-6 p-0">
+                <div class="form-group col-12">
+                    <label for="category">Loại hàng</label>
+                    <select class="custom-select" id="category" formControlName="categoryId">
+                        <option *ngFor="let item of categories" [value]="item.categoryId">{{item.categoryName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-12">
+                    <label for="description">Mô tả sản phẩm</label>
+                    <textarea type="text" id="description" [ngClass]="{'is-invalid':postForm.get('description')?.touched && postForm.get('description')?.invalid}" class="form-control" rows="6" formControlName="description"></textarea>
+                    <small class="invalid-feedback">Không hợp lệ</small>
+                </div>
+            </div>
+            <div class="col-6 text-center">
+                <h3>Ảnh sản phẩm</h3>
+                <img [src]="image" width="200px" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} mt-3 mb-3" alt="Ảnh sản phẩm">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" (change)="onFileSelect($event)">
+                    <label class="custom-file-label" for="customFile">Chọn ảnh</label>
+                </div>
+            </div>
+
+            <button mat-raised-button color="primary" class="col-2 m-3" [disabled]="postForm?.invalid" (click)="update()">Cập nhật</button>
+        </form>
+    </div>
+</ng-template>
+<a style="color: steelblue; cursor: pointer;" (click)="open(content)"><i class="fas fa-edit"></i></a>
