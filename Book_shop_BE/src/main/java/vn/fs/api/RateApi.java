@@ -69,6 +69,14 @@ public class RateApi {
 		return ResponseEntity.ok(rateRepository.save(rate));
 	}
 
+//	@PutMapping
+//	public ResponseEntity<Rate> put(@RequestBody Rate Rate) {
+//		if (!rateRepository.existsById(Rate.getid())) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		return ResponseEntity.ok(rateRepository.save(Rate));
+//	}
+
 	@PutMapping
 	public ResponseEntity<Rate> put(@RequestBody Rate rate) {
 		if (!rateRepository.existsById(rate.getId())) {
