@@ -1,6 +1,6 @@
 project bán sách nhóm 6 bọn em sử dụng cơ sở dữ liệu mySQl, front end dùng Visual Studio Code và back end call api dùng intellij idea
 
-
+2 folder BookShop_FE_User và BookShop_FE_Admin chạy trên visual studio code
 Lệnh tải node module để chạy front end: (Mở terminal trên visual studio code) npm i
 Lệnh tải chạy front end: (Mở terminal trên visual studio code) npm start
 Giao diện phía khách hàng: http://localhost:4200/home
