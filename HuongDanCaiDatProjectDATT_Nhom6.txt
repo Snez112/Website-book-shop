@@ -1,0 +1,10 @@
+project bán sách nhóm 6 bọn em sử dụng cơ sở dữ liệu mySQl, front end dùng Visual Studio Code và back end call api dùng intellij idea
+
+
+Lệnh tải node module để chạy front end: (Mở terminal trên visual studio code) npm i
+Lệnh tải chạy front end: (Mở terminal trên visual studio code) npm start
+Giao diện phía khách hàng: http://localhost:4200/home
+Giao diện phía admin: http://localhost:4201/admin/dashboard
+
+Mail đăng nhập của admin: greenyshop.adm@gmail.com
+Mật khẩu đăng nhập: 123456

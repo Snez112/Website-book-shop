@@ -24,14 +24,13 @@ import { FavoriteComponent } from './components/favorite/favorite.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { AboutComponent } from './components/about/about.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthGuard } from './guard/auth.guard';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgxPayPalModule } from 'ngx-paypal';
-
 
 const routes: Routes = [
   { path: 'home', component: HomepageComponent },
@@ -49,7 +48,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: '**', component: NotFoundComponent },
-]
+];
 
 @NgModule({
   declarations: [
@@ -71,7 +70,7 @@ const routes: Routes = [
     ForgotPasswordComponent,
     FavoriteComponent,
     ContactComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,8 +84,8 @@ const routes: Routes = [
     NgxPayPalModule,
     RouterModule.forRoot(routes, { enableTracing: true }),
     NgbModule,
-     // NgModule,
-     ToastrModule.forRoot({
+    // NgModule,
+    ToastrModule.forRoot({
       timeOut: 2500,
       // progressBar: true,
       progressAnimation: 'increasing',
@@ -96,6 +95,6 @@ const routes: Routes = [
     }),
   ],
   providers: [AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
